@@ -1,0 +1,240 @@
+{% extends 'base_age.html' %}
+
+{% block content %}
+<main role="main" class="ml-sm-auto px-4" id="content">
+    <div class="row d-flex justify-content-center">
+        <form action="{% url 'salvarhorario' %}" method="post" class="col-12 col-md-8 col-lg-6">
+            <h1>Cadastrar Horário</h1>
+            <br>
+            {% csrf_token %}
+            <div class="accordion" id="accordionExample">
+                <div class="card-deck">
+
+                    <!-- Domingo -->
+                    <div class="card">
+                        <div class="card-header" id="headingDomingo">
+                            <h5 class="mb-0">Domingo</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input option-checkbox" type="checkbox" value="1" id="opcaoDomingo" name="domingo">
+                                <label class="form-check-label" for="opcaoDomingo">Dia de Trabalho</label>
+                            </div>
+                            <div class="extra-content d-none">
+                                <label for="inicioDomingo">Início:</label>
+                                <input type="time" id="inicioDomingo" name="inicioDomingo" class="form-control">
+                                <label for="terminoDomingo">Término:</label>
+                                <input type="time" id="terminoDomingo" name="terminoDomingo" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Segunda-Feira -->
+                    <div class="card">
+                        <div class="card-header" id="headingSegunda">
+                            <h5 class="mb-0">Segunda-Feira</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input option-checkbox" type="checkbox" value="1" id="opcaoSegunda" name="segunda">
+                                <label class="form-check-label" for="opcaoSegunda">Dia de Trabalho</label>
+                            </div>
+                            <div class="extra-content d-none">
+                                <label for="inicioSegunda">Início:</label>
+                                <input type="time" id="inicioSegunda" name="inicioSegunda" class="form-control">
+                                <label for="terminoSegunda">Término:</label>
+                                <input type="time" id="terminoSegunda" name="terminoSegunda" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Terça-Feira -->
+                    <div class="card">
+                        <div class="card-header" id="headingTerca">
+                            <h5 class="mb-0">Terça-Feira</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input option-checkbox" type="checkbox" value="1" id="opcaoTerca" name="terca">
+                                <label class="form-check-label" for="opcaoTerca">Dia de Trabalho</label>
+                            </div>
+                            <div class="extra-content d-none">
+                                <label for="inicioTerca">Início:</label>
+                                <input type="time" id="inicioTerca" name="inicioTerca" class="form-control">
+                                <label for="terminoTerca">Término:</label>
+                                <input type="time" id="terminoTerca" name="terminoTerca" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Quarta-Feira -->
+                    <div class="card">
+                        <div class="card-header" id="headingQuarta">
+                            <h5 class="mb-0">Quarta-Feira</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input option-checkbox" type="checkbox" value="1" id="opcaoQuarta" name="quarta">
+                                <label class="form-check-label" for="opcaoQuarta">Dia de Trabalho</label>
+                            </div>
+                            <div class="extra-content d-none">
+                                <label for="inicioQuarta">Início:</label>
+                                <input type="time" id="inicioQuarta" name="inicioQuarta" class="form-control">
+                                <label for="terminoQuarta">Término:</label>
+                                <input type="time" id="terminoQuarta" name="terminoQuarta" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Quinta-Feira -->
+                    <div class="card">
+                        <div class="card-header" id="headingQuinta">
+                            <h5 class="mb-0">Quinta-Feira</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input option-checkbox" type="checkbox" value="1" id="opcaoQuinta" name="quinta">
+                                <label class="form-check-label" for="opcaoQuinta">Dia de Trabalho</label>
+                            </div>
+                            <div class="extra-content d-none">
+                                <label for="inicioQuinta">Início:</label>
+                                <input type="time" id="inicioQuinta" name="inicioQuinta" class="form-control">
+                                <label for="terminoQuinta">Término:</label>
+                                <input type="time" id="terminoQuinta" name="terminoQuinta" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Sexta-Feira -->
+                    <div class="card">
+                        <div class="card-header" id="headingSexta">
+                            <h5 class="mb-0">Sexta-Feira</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input option-checkbox" type="checkbox" value="1" id="opcaoSexta" name="sexta">
+                                <label class="form-check-label" for="opcaoSexta">Dia de Trabalho</label>
+                            </div>
+                            <div class="extra-content d-none">
+                                <label for="inicioSexta">Início:</label>
+                                <input type="time" id="inicioSexta" name="inicioSexta" class="form-control">
+                                <label for="terminoSexta">Término:</label>
+                                <input type="time" id="terminoSexta" name="terminoSexta" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Sábado -->
+                    <div class="card">
+                        <div class="card-header" id="headingSabado">
+                            <h5 class="mb-0">Sábado</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input option-checkbox" type="checkbox" value="1" id="opcaoSabado" name="sabado">
+                                <label class="form-check-label" for="opcaoSabado">Dia de Trabalho</label>
+                            </div>
+                            <div class="extra-content d-none">
+                                <label for="inicioSabado">Início:</label>
+                                <input type="time" id="inicioSabado" name="inicioSabado" class="form-control">
+                                <label for="terminoSabado">Término:</label>
+                                <input type="time" id="terminoSabado" name="terminoSabado" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+                
+            </div>
+            <button type="submit" class="btn btn-dark btn-block custom-hover">Próximo</button>
+        </form>
+    </div>
+</main>
+
+<style>
+    .custom-hover {
+        background-color: #fff; /* Cor padrão do btn-dark */
+        color: black;
+    }
+
+    .custom-hover:hover {
+        background-color: #343a40; /* Cor desejada no hover */
+        color: white;
+    }
+</style>
+
+<!-- Scripts e JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Alterna a visibilidade do conteúdo extra quando o checkbox é marcado
+        document.querySelectorAll('.option-checkbox').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                const extraContent = this.closest('.card-body').querySelector('.extra-content');
+                if (this.checked) {
+                    extraContent.classList.remove('d-none');
+                } else {
+                    extraContent.classList.add('d-none');
+                }
+            });
+        });
+
+        // Código existente para a sidebar e modais
+        document.getElementById('sidebar').classList.add('collapsed');
+        document.getElementById('content').classList.add('expanded');
+
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('content').classList.toggle('expanded');
+        });
+
+        document.querySelectorAll('#sidebar .dropdown-toggle').forEach(function(toggle) {
+            toggle.addEventListener('click', function(event) {
+                event.preventDefault();
+                const menu = this.nextElementSibling;
+                const isVisible = menu.classList.contains('show');
+
+                document.querySelectorAll('#sidebar .dropdown-menu').forEach(function(dropdown) {
+                    dropdown.classList.remove('show');
+                });
+
+                if (!isVisible) {
+                    menu.classList.add('show');
+                }
+            });
+        });
+        
+
+        {% if aviso %}
+            $(document).ready(function() {
+                $('#avisoModal').modal('show');
+            });
+        {% endif %}
+
+        {% if aviso_cad %}
+            $(document).ready(function() {
+                $('#avisoCadModal').modal('show');
+                setTimeout(function() {
+                    $('#avisoCadModal').fadeOut(50, function() {
+                        $(this).modal('hide');
+                    });
+                }, 1000);
+            });
+        {% endif %}
+    });
+</script>
+
+<!-- Estilização customizada -->
+<style>
+    .card-deck .card {
+        flex: 1 1 30%;
+        margin: 10px;
+    }
+    .card a, .card a:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
+{% endblock %}

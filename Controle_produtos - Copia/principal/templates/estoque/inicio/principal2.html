@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout com Bootstrap</title>
+  <!-- Carregue a versão mais recente do Bootstrap e jQuery diretamente do CDN -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        * {
+            font-family: "Montserrat", sans-serif;
+            
+        }
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    #sidebar {
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      background-color: #f8f9fa;
+      transition: margin 0.3s ease-in-out;
+      width: 250px;
+      padding-top: 56px;
+      overflow-y: auto;
+    }
+
+    #sidebar.collapsed {
+      margin-left: -250px;
+    }
+
+    #sidebar ul.nav {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    #sidebar ul.nav li a {
+      padding: 10px 15px;
+      display: block;
+      text-decoration: none;
+    }
+
+    #sidebar ul.nav li.dropdown {
+      position: relative;
+    }
+
+    #sidebar ul.nav li .dropdown-menu {
+      display: none;
+      position: static;
+      background-color: #e9ecef;
+      width: 100%;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    #sidebar ul.nav li .dropdown-menu.show {
+      display: block;
+    }
+
+    #content {
+      margin-left: 250px;
+      padding-top: 70px;
+      transition: margin 0.3s ease-in-out;
+      width: calc(100% - 250px);
+    }
+
+    #content.expanded {
+      margin-left: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar Superior -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <button class="btn btn-dark" id="sidebarToggle">*</button>
+    <a class="navbar-brand ml-3" href="{% url 'login' %}">Gerenciamento de estoque</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'login' %}">Conta</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      
+      <!-- Navbar Lateral -->
+      <nav id="sidebar" class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Reservados</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown1" role="button">
+                    Cadastrar
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="{% url 'login' %}">Cadastrar Produto</a>
+                    <a class="dropdown-item" href="{% url 'login' %}">Cadastrar Fornecedor</a>
+                    <a class="dropdown-item" href="{% url 'login' %}">Cadastrar Técnico</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown2" role="button">
+                    Movimentação 
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdown2">
+                    <a class="dropdown-item" href="{% url 'login' %}">Entrada</a>
+                    <a class="dropdown-item" href="{% url 'login' %}">Saída</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown3" role="button">
+                    Relatorio
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdown3">
+                    <a class="dropdown-item" href="{% url 'login' %}">Entrada</a>
+                    <a class="dropdown-item" href="{% url 'login' %}">Saída</a>
+                    <a class="dropdown-item" href="{% url 'login' %}">Técnicos</a>
+                    <a class="dropdown-item" href="{% url 'login' %}">Fornecedores</a>
+                </div>
+            </li>
+        </ul>
+      </nav>
+
+      <!-- Conteúdo Principal -->
+      <main role="main" class="ml-sm-auto px-4" id="content">
+        <h1 class="h2">Nosso Estoque</h1>
+        <p>Estoque Atualizado.</p>
+
+        <!-- Exemplo de Tabela -->
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Modelo</th>
+              </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Carregue o jQuery completo -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script>
+    document.getElementById('sidebarToggle').addEventListener('click', function () {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+      document.getElementById('content').classList.toggle('expanded');
+    });
+
+    document.querySelectorAll('#sidebar .dropdown-toggle').forEach(function (toggle) {
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        const menu = this.nextElementSibling;
+        const isVisible = menu.classList.contains('show');
+        
+        // Esconder todos os dropdowns
+        document.querySelectorAll('#sidebar .dropdown-menu').forEach(function (dropdown) {
+          dropdown.classList.remove('show');
+        });
+
+        // Mostrar o dropdown clicado
+        if (!isVisible) {
+          menu.classList.add('show');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

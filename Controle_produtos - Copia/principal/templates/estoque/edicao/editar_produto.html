@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Conteúdo Principal -->
+<main role="main" class="ml-sm-auto px-4" id="content">
+    <div class="row d-flex justify-content-center">
+        <form id="meuFormulario" action="{% url 'editarProd' produto.id %}" method="post">
+            <h1 style="color: #333; text-transform: uppercase; font-weight: normal;">
+                Edição de Produto
+            </h1>
+            <hr style="border-top: 2px solid #333; margin-bottom: 20px;">
+
+            <h4 style="color: #333; text-transform: uppercase; font-weight: normal;">
+                - Descrição do Produto:
+            </h4>
+            <table style="width: 100%; border-collapse: collapse; color: #333; font-size: 16px;">
+                <tr>
+                    <td style="padding: 10px; font-weight: 500; border-bottom: 1px solid #ddd; width: 30%;">
+                        Produto:
+                    </td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+                        {{ produto.nome }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; font-weight: 500; border-bottom: 1px solid #ddd;">
+                        Preço:
+                    </td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+                        {{ produto.preco }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; font-weight: 500; border-bottom: 1px solid #ddd;">
+                        Grupo:
+                    </td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+                        {{ produto.grupo }}
+                    </td>
+                </tr>
+            </table>
+            <br>
+            {% csrf_token %}
+            <label>Nome</label>
+            <input type="text" name="nome" class="form-control" value="{{ produto.nome }}" required>
+            <br><br>
+            <label for="exampleFormControlSelect1">Grupo</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="grupo" required>
+                <option value="" disabled selected>Selecione um grupo</option>
+                {% for item in grupos %}
+                <option value="{{ item.nome }}">{{ item.nome }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <label>Preço</label>
+            <input type="text" name="preco" class="form-control" value="{{ produto.preco }}">
+            <br><br>
+            <button type="submit" class="btn btn-dark btn-block custom-hover">Salvar</button>
+        </form>
+    </div>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="erroModal" tabindex="-1" role="dialog" aria-labelledby="erroModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="erroModalLabel">Erro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Você deve selecionar um grupo antes de enviar o formulário.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark btn-block custom-hover" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Carregue o jQuery completo -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('meuFormulario');
+
+        form.addEventListener('submit', function(event) {
+            const selectGrupo = document.getElementById('exampleFormControlSelect1');
+
+            // Verifica se a opção selecionada é a predefinida
+            if (selectGrupo.value === "") {
+                event.preventDefault(); // Impede o envio do formulário
+                $('#erroModal').modal('show'); // Mostra o modal
+            }
+        });
+    });
+
+    // Inicializa o sidebar como colapsado e o conteúdo expandido
+    document.getElementById('sidebar').classList.add('collapsed');
+    document.getElementById('content').classList.add('expanded');
+
+    // Evento para alternar o estado do sidebar ao clicar no botão
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+        document.getElementById('content').classList.toggle('expanded');
+    });
+
+    // Gerenciamento dos dropdowns
+    document.querySelectorAll('#sidebar .dropdown-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            const menu = this.nextElementSibling;
+            const isVisible = menu.classList.contains('show');
+
+            // Esconder todos os dropdowns
+            document.querySelectorAll('#sidebar .dropdown-menu').forEach(function(dropdown) {
+                dropdown.classList.remove('show');
+            });
+
+            // Mostrar o dropdown clicado
+            if (!isVisible) {
+                menu.classList.add('show');
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout com Bootstrap</title>
+  <!-- Carregue a versão mais recente do Bootstrap e jQuery diretamente do CDN -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+     * {
+        font-family: "Montserrat", sans-serif;
+     }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    td a {
+    color: black;  /* Define a cor do texto como preto */
+    text-decoration: none;  /* Remove o sublinhado padrão do link */
+    font-weight:bold ;
+  }
+
+  td a:hover {
+    text-decoration: none;
+    color: #A9A9A9; 
+  }
+
+    #sidebar {
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      background-color: #343a40; /* Cor mais escura, similar à bg-dark da navbar superior */
+      transition: margin 0.3s ease-in-out;
+      width: 250px;
+      padding-top: 56px;
+      overflow-y: auto;
+    }
+
+    #sidebar.collapsed {
+      margin-left: -250px;
+    }
+
+    #sidebar ul.nav {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    #sidebar ul.nav li a {
+      padding: 10px 15px;
+      display: block;
+      text-decoration: none;
+      color: white; /* Deixe o texto branco para maior contraste */
+    }
+
+    #sidebar ul.nav li .dropdown-menu {
+      background-color: #495057; /* Cor um pouco mais clara para dropdown */
+    }
+
+    #sidebar ul.nav li .dropdown-item {
+      color: black; /* Definindo a cor do texto da dropdown-item como preto */
+    }
+
+    #sidebar ul.nav li .dropdown-item:focus,
+    #sidebar ul.nav li .dropdown-item:hover {
+      background-color: #343a40; /* Cor da navbar */
+      color: white; /* Texto branco */
+    }
+
+    #sidebar ul.nav li.dropdown {
+      position: relative;
+    }
+
+    #sidebar ul.nav li .dropdown-menu {
+      display: none;
+      position: static;
+      background-color: #e9ecef;
+      width: 100%;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    #sidebar ul.nav li .dropdown-menu.show {
+      display: block;
+    }
+
+    #content {
+      margin-left: 250px;
+      padding-top: 70px;
+      transition: margin 0.3s ease-in-out;
+      width: calc(100% - 250px);
+    }
+
+    #content.expanded {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    @media print {
+      .no-print {
+        display: none;
+      }
+      #productTable a {
+      text-decoration: none; /* Remove o sublinhado dos links ao imprimir */
+      font-weight: normal;
+    }
+    }
+
+    #sidebar {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #sidebar ul.nav {
+    flex-grow: 1; /* Faz o conteúdo principal da navbar expandir */
+    padding-bottom: 10px; /* Um pequeno padding inferior opcional */
+  }
+
+  #configLink {
+    margin-top: auto; /* Garante que o item fique no final */
+  }
+  #sidebar .nav-link {
+  color: white;  /* Garante que todos os links dentro da sidebar fiquem brancos */
+}
+
+#sidebar .nav-link:hover {
+  color: #A9A9A9; /* Se quiser, pode manter o hover em cinza claro */
+}
+
+.custom-hover {
+        background-color: #fff; /* Cor padrão do btn-dark */
+        color: black;
+    }
+
+    .custom-hover:hover {
+        background-color: #343a40; /* Cor desejada no hover */
+        color: white;
+    }
+</style>
+
+</head>
+
+<body>
+
+  <!-- Navbar Superior -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <button class="btn btn-dark" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+  <a class="navbar-brand ml-3" href="{% url 'pg_age' %}">Gerenciamento de agenda</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active"></li>
+        <a class="nav-link" href="{% url 'redireciona' %}">Estoque <i class="fas fa-dolly"></i></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="no-print">
+<!-- Navbar Lateral -->
+<nav id="sidebar" class="sidebar">
+  <ul class="nav flex-column">
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="dropdown3" role="button">
+        <i class="fas fa-file-import"></i>Cadastrar
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdown3">
+        <a class="dropdown-item" href="{% url 'cad_horario' %}">Horario</a>
+        <a class="dropdown-item" href="{% url 'cad_corte' %}">Corte</a>
+    </li>
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="dropdown3" role="button">
+        <i class="fas fa-cog"></i> Editar
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdown3">
+        <a class="dropdown-item" href="{% url 'relaUsua' %}">Horario</a>
+        <a class="dropdown-item" href="{% url 'relaUsua' %}">Agendamento</a>
+        <a class="dropdown-item" href="{% url 'relaUsua' %}">Corte</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'novo_agendamento' %}"><i class="fas fa-calendar-alt"></i> Agendar</a>
+    </li>
+
+    <!-- Novo link simples -->
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'relatorio' %}"><i class="fas fa-file-alt"></i> Relatório completo</a>
+    </li>
+
+    <!-- Novo Link Configurações Adicionado no Final -->
+      <li class="nav-item" id="configLink"></li>
+        <a class="nav-link" href="{% url 'irRegistra' %}"><i class="fas fa-user"></i> Conta</a>
+      </li>
+
+  </ul>
+</nav>
+
+      </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}

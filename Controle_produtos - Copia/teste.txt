@@ -1,0 +1,144 @@
+<div class="table-responsive">
+    <table class="table table-striped table-sm table-bordered" id="productTable">
+      <thead>
+        <tr>
+          <th><h6>DATA</h6></th>
+          <th><h6>NOME</h6></th>
+          <th><h6>GRUPO</h6></th>
+          <th><h6>QUANTIDADE</h6></th>
+          <th><h6>PREÇO</h6></th>
+          <th><h6>GASTO</h6></th>
+          <th><h6>FORNECEDOR</h6></th>
+          <th><h6>USUÁRIO</h6></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entrada in entradas %}
+        <tr>
+          <td>{{entrada.data}}</td>
+          <td><a href="#" data-toggle="modal" data-target="#modal{{ entrada.id }}">{{ entrada.nome }}</a></td>
+          
+          <td>{{entrada.grupo}}</td>
+          <td>{{entrada.quant}}</td>
+          <td>{{entrada.preco}}</td>
+          <td>{{entrada.gasto}}</td>
+          <td>{{entrada.forn}}</td>
+          <td>{{entrada.usuario}}</td>
+          <div class="modal fade" id="modal{{ entrada.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Escolha a opção.
+                </div>
+                <div class="modal-footer">
+                  <a href="{% url 'editarent' entrada.id %}"><button type="button" class="btn btn-info"><i class="fas fa-edit"></i></button></a>
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-id="{{ entrada.id }}">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> 
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que quer excluir esse item permanentemente?
+      </div>
+      <div class="modal-footer">
+        <a id="confirmDeleteBtn" type="button" class="btn btn-danger">Excluir</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #productTable th, #productTable td {
+    border-width: 1px; /* Define a espessura das bordas */
+    border-color: #000; /* Define a cor das bordas */
+  }
+</style>
+<!-- Carregue o jQuery completo -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa o sidebar como colapsado e o conteúdo expandido
+    document.getElementById('sidebar').classList.add('collapsed');
+    document.getElementById('content').classList.add('expanded');
+
+    // Evento para alternar o estado do sidebar ao clicar no botão
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+      document.getElementById('content').classList.toggle('expanded');
+    });
+
+    // Gerenciamento dos dropdowns
+    document.querySelectorAll('#sidebar .dropdown-toggle').forEach(function(toggle) {
+      toggle.addEventListener('click', function(event) {
+        event.preventDefault();
+        const menu = this.nextElementSibling;
+        const isVisible = menu.classList.contains('show');
+        
+        // Esconder todos os dropdowns
+        document.querySelectorAll('#sidebar .dropdown-menu').forEach(function(dropdown) {
+          dropdown.classList.remove('show');
+        });
+
+        // Mostrar o dropdown clicado
+        if (!isVisible) {
+          menu.classList.add('show');
+        }
+      });
+    });
+  });
+
+  $('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Botão que acionou o modal
+    var id = button.data('id'); // Extrai o ID do item
+    var url = "{% url 'deleteEnt' 0 %}".replace('0', id); // Gera o URL dinâmico
+
+    $('#confirmDeleteBtn').attr('href', url);
+  });
+
+  // Função de filtragem da tabela
+  document.getElementById('searchInput').addEventListener('input', function () {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#productTable tbody tr');
+    
+    rows.forEach(row => {
+      const cells = row.getElementsByTagName('td');
+      let found = false;
+      
+      for (let i = 0; i < cells.length; i++) {
+        if (cells[i].textContent.toLowerCase().includes(searchTerm)) {
+          found = true;
+          break;
+        }
+      }
+      
+      row.style.display = found ? '' : 'none';
+    });
+  });
+</script>
+{% endblock %}

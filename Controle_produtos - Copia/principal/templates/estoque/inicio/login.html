@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout com Bootstrap</title>
+  <!-- Carregue a versão mais recente do Bootstrap diretamente do CDN -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    
+    * {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background: #343a40;;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      border: none;
+      height: 320px; /* Mantendo a altura original do card */
+      width: 400px; /* Definindo uma largura menor para o card */
+    }
+
+    .forms-inputs {
+      position: relative;
+    }
+
+    .forms-inputs span {
+      position: absolute;
+      top: -18px;
+      left: 10px;
+      background-color: #fff;
+      padding: 5px 10px;
+      font-size: 15px;
+    }
+
+    .forms-inputs input {
+      height: 50px;
+      width: 100%; /* Mantendo a largura dos campos de entrada */
+      border: 2px solid #eee;
+    }
+
+    .forms-inputs input:focus {
+      box-shadow: none;
+      outline: none;
+      border: 2px solid #343a40;;
+    }
+
+    .btn {
+      height: 50px;
+    }
+
+    .success-data {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bxs-badge-check {
+      font-size: 90px;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <form action="{% url 'slogin' %}" method="post">
+    <div class="card px-5 py-5" id="form1">
+      <div class="form-data" v-if="!submitted">
+        <div class="forms-inputs mb-4">
+            {% csrf_token %}
+            <span>Usuário</span>
+            <input autocomplete="off" type="text" name="usuario" >
+        </div>
+          <div class="forms-inputs mb-4">
+            <span>Senha</span>
+            <input autocomplete="off" type="password" name="senha" >
+          </div>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-dark w-100">Entrar</button>
+        </div>
+        <div class="mb-3">
+          <a href="{% url 'irRegistra' %}" style="color: black; text-decoration: none;">Registre-se</a>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+</body>
+
+</html>

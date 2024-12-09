@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso Centralizado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', Arial, sans-serif; /* Fonte Montserrat */
+            background-color: #000; /* Fundo preto */
+            color: #fff; /* Cor do texto padrão branca */
+        }
+        .container {
+            text-align: center;
+            padding: 30px;
+            background-color: #333; /* Fundo da caixa do aviso */
+            border: 1px solid #444;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+            width: 500px;
+        }
+        .aviso-principal {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .aviso-secundario {
+            font-size: 20px;
+            margin: 20px 0; /* Espaçamento entre o aviso principal e o secundário */
+        }
+        .btn-voltar {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #000; /* Cor do texto do botão preta */
+            background-color: #fff; /* Fundo branco do botão */
+            border: none; /* Remover borda */
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px; /* Espaçamento entre o texto e o botão */
+            transition: background-color 0.3s, color 0.3s; /* Transição suave para hover */
+        }
+        .btn-voltar:hover {
+            background-color: #f8f9fa; /* Cor de fundo mais clara ao passar o mouse */
+            color: #000; /* Manter cor do texto preta */
+        }
+
+        /* Estilo responsivo */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+            .aviso-principal {
+                font-size: 28px;
+            }
+            .aviso-secundario {
+                font-size: 16px;
+                margin: 15px 0;
+            }
+            .btn-voltar {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="aviso-principal">Atenção!</div>
+        <div class="aviso-secundario">Detectamos que o usuário fez algo inesperado, volte e tente novamente.</div>
+        <a href="{% url 'redireciona' %}" class="btn-voltar">Voltar</a>
+    </div>
+</body>
+</html>

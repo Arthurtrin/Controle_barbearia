@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main" class="ml-sm-auto px-4" id="content">
+  <!-- Conteúdo Principal -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h2 mb-0" style="font-weight: normal;">ESTOQUE</h1>
+
+    <div class="no-print">
+      <div class="d-flex align-items-center">
+        <div class="input-group mr-3">
+          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary" onclick="window.print()">
+          <i class="fas fa-print"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <h5 style="font-weight: normal; margin-bottom: 10px;">Estoque Atualizado.</h5>
+  <h5 style="font-weight: normal;">{{data}}</h5><br>
+
+ <!-- Cards responsivos e retangulares -->
+<div class="row mb-4 justify-content-center">
+  <div class="col-md-4 col-sm-6 col-12 mb-4">
+    <div class="card text-white bg-primary" style="margin: 10px; height: 90px;">
+      <div class="card-body p-2">
+        <h4 class="card-title text-left" style="font-size: 1.2rem;"><i class="fas fa-tag"></i> Produtos:</h4>
+        <h2 class="card-text text-left" style="font-size: 1.5rem;">{{qtd_estoque}}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6 col-12 mb-4">
+    <div class="card text-white bg-success" style="margin: 10px; height: 90px;">
+      <div class="card-body p-2">
+        <h4 class="card-title text-left" style="font-size: 1.2rem;"><i class="fas fa-arrow-up"></i> Entradas:</h4>
+        <h2 class="card-text text-left" style="font-size: 1.5rem;">{{qtd_entrada}}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6 col-12 mb-4">
+    <div class="card text-white bg-danger" style="margin: 10px; height: 90px;">
+      <div class="card-body p-2">
+        <h4 class="card-title text-left" style="font-size: 1.2rem;"><i class="fas fa-arrow-down"></i> Saídas:</h4>
+        <h2 class="card-text text-left" style="font-size: 1.5rem;">{{qtd_saida}}</h2>
+      </div>
+    </div>
+  </div>
+  <!-- Novo Card 1 -->
+  <div class="col-md-4 col-sm-6 col-12 mb-4">
+    <div class="card text-white bg-info" style="margin: 10px; height: 90px;">
+      <div class="card-body p-2">
+        <h4 class="card-title text-left" style="font-size: 1.2rem;"><i class="fas fa-chart-line"></i> Lucro:</h4>
+        <h2 class="card-text text-left" style="font-size: 1.5rem;">R$ 000.00</h2>
+      </div>
+    </div>
+  </div>
+  <!-- Novo Card 2 -->
+  <div class="col-md-4 col-sm-6 col-12 mb-4">
+    <div class="card text-white bg-warning" style="margin: 10px; height: 90px;">
+      <div class="card-body p-2">
+        <h4 class="card-title text-left" style="font-size: 1.2rem;"><i class="fas fa-chart-bar"></i> Gastos:</h4>
+        <h2 class="card-text text-left" style="font-size: 1.5rem;">R$ {{total_gasto}}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Tabela de Produtos -->
+  <div class="table-responsive">
+    <div class="btn-group mb-0" role="group" aria-label="Botões de Ação">
+        <div style="background-color: #343a40;"><a type="button" class="btn btn-outline-secondary rounded-0" href="" style="color: white">Estoque</a></div>
+        <a type="button" class="btn btn-outline-secondary rounded-0" href="{% url 'relaProd' %}">Produto</a>
+        <a type="button" class="btn btn-outline-secondary rounded-0" href="{% url 'relaEnt' %}">Entrada</a>
+        <a type="button" class="btn btn-outline-secondary rounded-0" href="{% url 'relaSai' %}">Saída</a>
+    </div>
+    <table class="table table-striped table-sm table-bordered" id="productTable">
+        <thead>
+            <tr>
+                <th><h6>NOME</h6></th>
+                <th><h6>GRUPO</h6></th>
+                <th><h6>QUANTIDADE</h6></th>
+                <th><h6>PREÇO</h6></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in estoque %}
+            <tr>
+                <td><a href="#" data-toggle="modal" data-target="#modal{{ produto.id }}">{{ produto.nome }}</a></td>
+                <td>{{ produto.grupo }}</td>
+                <td>{{ produto.quant }}</td>
+                <td>{{ produto.preco }}</td>
+            </tr>
+            <div class="modal fade" id="modal{{ produto.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Escolha a opção:</p>
+                            <p style="margin-bottom: 5px;"><i class="fas fa-arrow-up"></i> Entrada.</p>
+                            <p><i class="fas fa-arrow-down"></i> Saída.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-success" href="{% url 'entrada' produto.id %}"><i class="fas fa-arrow-up"></i></a>
+                            <a type="button" class="btn btn-danger" href="{% url 'saida' produto.id %}"><i class="fas fa-arrow-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+</main>
+
+<!-- CSS para Responsividade e Altura dos Cards -->
+<style>
+  .card {
+    height: 90px; /* Altura padrão dos cards */
+    margin: 10px;
+    border-radius: 8px; /* Bordas arredondadas para um visual mais elegante */
+}
+
+@media (max-width: 768px) {
+    .card {
+        height: 80px; /* Altura ajustada para telas médias */
+    }
+}
+
+@media (max-width: 576px) {
+    .card {
+        height: 70px; /* Altura ajustada para telas pequenas */
+    }
+}
+
+#productTable th, #productTable td {
+    border-width: 1px;
+    border-color: #000;
+}
+
+.btn-group {
+    margin-bottom: 0; /* Remove a margem inferior padrão */
+}
+
+.table-responsive {
+    margin-bottom: 0; /* Remove a margem inferior da tabela */
+}
+
+.btn-group .btn {
+    margin-right: 0; /* Remove o espaçamento entre os botões */
+    border-bottom: none; /* Remove a borda inferior */
+}
+
+.btn-group .btn:hover {
+        background-color: #343a40;
+        color: white; /* Mantém o texto branco ao passar o mouse */
+    }
+</style>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('sidebar').classList.add('collapsed');
+    document.getElementById('content').classList.add('expanded');
+
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+      document.getElementById('content').classList.toggle('expanded');
+    });
+
+    document.querySelectorAll('#sidebar .dropdown-toggle').forEach(function(toggle) {
+      toggle.addEventListener('click', function(event) {
+        event.preventDefault();
+        const menu = this.nextElementSibling;
+        const isVisible = menu.classList.contains('show');
+        
+        document.querySelectorAll('#sidebar .dropdown-menu').forEach(function(dropdown) {
+          dropdown.classList.remove('show');
+        });
+
+        if (!isVisible) {
+          menu.classList.add('show');
+        }
+      });
+    });
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#productTable tbody tr');
+      
+      rows.forEach(row => {
+        const cells = row.getElementsByTagName('td');
+        let found = false;
+        
+        for (let i = 0; i < cells.length; i++) {
+          if (cells[i].textContent.toLowerCase().includes(searchTerm)) {
+            found = true;
+            break;
+          }
+        }
+        
+        row.style.display = found ? '' : 'none';
+      });
+    });
+  });
+</script>
+{% endblock %}
